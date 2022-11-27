@@ -21,14 +21,17 @@ function generateGraph(): number[][] {
 }
 
 export async function main(): Promise<void> {
-  let data = `${SAMPLES}`;
+  await FS.ensureDir(OUT_DIR);
+  const outPath = Path.join(OUT_DIR, `graph_d${GRAPH_SIZE}_s${SAMPLES}.txt`);
+  console.log(`Writing to ${outPath}, generating ${SAMPLES} graphs...`);
+  await FS.writeFile(outPath, `${SAMPLES}`);
   for (let i = 0; i < SAMPLES; i++) {
     const graph = generateGraph().flat();
-    data += "\n" + graph.join(" ");
+    const data = "\n" + graph.join(" ");
+    await FS.appendFile(outPath, data);
+    console.log(`Generated sample ${i + 1} of ${SAMPLES}.`);
   }
-  await FS.mkdirp(OUT_DIR);
-  const outPath = Path.join(OUT_DIR, `graph_d${GRAPH_SIZE}_s${SAMPLES}.txt`);
-  await FS.writeFile(outPath, data);
+  console.log("- Done.");
 }
 
 main().catch(console.error);
