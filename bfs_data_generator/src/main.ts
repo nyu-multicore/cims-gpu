@@ -23,7 +23,7 @@ function generateGraph(): number[][] {
 
 export async function main(): Promise<void> {
   await FS.ensureDir(OUT_DIR);
-  const outPath = Path.join(OUT_DIR, `graph_d${GRAPH_SIZE}_s${SAMPLES}.txt`);
+  const outPath = Path.join(OUT_DIR, `graph_g${GRAPH_SIZE}_s${SAMPLES}.txt`);
   console.log(`Writing to ${outPath}, generating ${SAMPLES} graphs...`);
   await FS.writeFile(outPath, `${SAMPLES}\n`);
   for (let i = 0; i < SAMPLES; i++) {
